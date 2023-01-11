@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 
 void main() {
@@ -16,13 +16,12 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    return MaterialApp(
+    return const CupertinoApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        useMaterial3: true,
-        primarySwatch: Colors.blue,
+      theme: CupertinoThemeData(
+        primaryColor: CupertinoColors.activeBlue,
       ),
-      home: const MyHomePage(title: "Raul's learning Flutter!"),
+      home: MyHomePage(title: "Raul's learning Flutter!"),
     );
   }
 }
@@ -69,20 +68,23 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-      appBar: AppBar(
-        title: Text(widget.title),
+    return CupertinoPageScaffold(
+      navigationBar: CupertinoNavigationBar(
+        backgroundColor: CupertinoColors.activeBlue.withOpacity(0.80),
+        middle: Text(
+          widget.title,
+          style: const TextStyle(color: CupertinoColors.white),
+        ),
       ),
-      body: Center(
+      child: SafeArea(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             Container(
               margin: const EdgeInsets.only(bottom: 100.0),
               padding: const EdgeInsets.all(8.0),
               decoration: BoxDecoration(
-                color: Colors.blue.withOpacity(0.25),
+                color: CupertinoColors.activeBlue.withOpacity(0.13),
                 borderRadius: BorderRadius.circular(4.0),
               ),
               child: Image.asset(
@@ -91,45 +93,38 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             const Text(
-              'You have pushed the button this many times:',
-              // style: TextStyle.headline1.copyWith(color: Colors.indigo),
+              'You have pushed the + button this many times:',
             ),
             Text(
               '$_counter',
-              style: Theme.of(context)
+              style: CupertinoTheme.of(context)
                   .textTheme
-                  .headline4
-                  ?.copyWith(color: Colors.blue),
+                  .textStyle
+                  .copyWith(color: CupertinoColors.activeBlue),
             ),
             const SizedBox(height: 16),
-          ],
-        ),
-      ),
-      floatingActionButton: SizedBox(
-        width: double.infinity,
-        height: 80,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            const SizedBox(width: 16),
-            FloatingActionButton(
-              onPressed: _resetDisabled ? null : _decrementCounter,
-              tooltip: 'Decrement',
-              disabledElevation: 0,
-              child: const Icon(Icons.remove),
-            ),
-            const SizedBox(width: 16),
-            FloatingActionButton(
-              onPressed: _resetDisabled ? null : _resetCounter,
-              tooltip: 'Reset',
-              disabledElevation: 0,
-              child: const Icon(Icons.refresh),
-            ),
-            const SizedBox(width: 16),
-            FloatingActionButton(
-              onPressed: _incrementCounter,
-              tooltip: 'Increment',
-              child: const Icon(Icons.add),
+            Positioned.fill(
+              bottom: 0,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  CupertinoButton(
+                    onPressed: _resetDisabled ? null : _decrementCounter,
+                    padding: EdgeInsets.zero,
+                    child: const Icon(CupertinoIcons.minus),
+                  ),
+                  CupertinoButton(
+                    onPressed: _resetDisabled ? null : _resetCounter,
+                    padding: EdgeInsets.zero,
+                    child: const Icon(CupertinoIcons.refresh),
+                  ),
+                  CupertinoButton(
+                    onPressed: _incrementCounter,
+                    padding: EdgeInsets.zero,
+                    child: const Icon(CupertinoIcons.plus),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
